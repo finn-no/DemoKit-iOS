@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import SwiftUI
-import FINNBottomSheet
 
 class DemoGroupViewController: UIViewController {
 
@@ -18,11 +17,6 @@ class DemoGroupViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         return tableView
     }()
-
-    private let bottomSheetTransitioningDelegate = BottomSheetTransitioningDelegate(
-        contentHeights: [.bottomSheetAutomatic, UIScreen.main.bounds.size.height - 200],
-        startTargetIndex: 0
-    )
 
     // MARK: - Init
 

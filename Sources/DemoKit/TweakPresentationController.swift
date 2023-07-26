@@ -6,11 +6,11 @@ class TweakPresentationController {
     // MARK: - Private properties
 
     private let demoViewController: UIViewController
-    private let tweakableDemo: any TweakDemoable
+    private let tweakableDemo: any TweakableDemo
 
     // MARK: - Init
 
-    init(demoViewController: UIViewController, tweakableDemo: any TweakDemoable) {
+    init(demoViewController: UIViewController, tweakableDemo: any TweakableDemo) {
         self.demoViewController = demoViewController
         self.tweakableDemo = tweakableDemo
     }
