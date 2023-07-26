@@ -10,6 +10,12 @@ class DemoGroupViewController: UIViewController {
     private let reuseIdentifier = "tableCell"
     private var tweakPresentationController: TweakPresentationController?
 
+    private lazy var demoGroupSelectorView: DemoGroupSelectorView = {
+        let view = DemoGroupSelectorView(withAutoLayout: true)
+        view.delegate = self
+        return view
+    }()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(withAutoLayout: true)
         tableView.dataSource = self
@@ -34,12 +40,14 @@ class DemoGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        title = demoGroup.groupTitle
     }
 
     // MARK: - Setup
 
     private func setup() {
+        navigationItem.titleView = demoGroupSelectorView
+        demoGroupSelectorView.title = demoGroup.groupTitle
+
         view.addSubview(tableView)
         tableView.fillInSuperview()
     }
@@ -117,5 +125,13 @@ extension DemoGroupViewController: UITableViewDelegate {
         let demoable = demoGroup.demoable(for: indexPath.row)
         let viewController = ViewControllerMapper.viewController(for: demoable)
         present(viewController: viewController, for: demoable)
+    }
+}
+
+// MARK: - DemoGroupSelectorViewDelegate
+
+extension DemoGroupViewController: DemoGroupSelectorViewDelegate {
+    func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView) {
+        print("ℹ️ \(String(describing: Self.self)).\(#function)")
     }
 }
