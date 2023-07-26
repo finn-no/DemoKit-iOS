@@ -121,24 +121,7 @@ extension DemoGroupViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let demoable = demoGroup.demoable(for: indexPath.row)
-
-        switch demoable {
-        case _ as UIView:
-            let viewController = UIViewDemoViewController(demoable: demoable)
-            present(viewController: viewController, for: demoable)
-        case let demoView as any View:
-            let anyView = AnyView(demoView)
-            let viewController = SwiftUIDemoViewController(rootView: anyView, demoable: demoable)
-            present(viewController: viewController, for: demoable)
-        case let previewProvider as any PreviewProvider:
-            let previews = type(of: previewProvider).previews
-            let anyView = AnyView(previews)
-            let viewController = SwiftUIDemoViewController(rootView: anyView, demoable: demoable)
-            present(viewController: viewController, for: demoable)
-        case let demoViewController as UIViewController:
-            present(viewController: demoViewController, for: demoable)
-        default:
-            fatalError("⛔️ Got neither `UIView`, `View` nor `UIViewController` for demo item with identifier '\(demoable.identifier)'")
-        }
+        let viewController = ViewControllerMapper.viewController(for: demoable)
+        present(viewController: viewController, for: demoable)
     }
 }
