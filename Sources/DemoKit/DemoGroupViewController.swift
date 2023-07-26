@@ -2,11 +2,13 @@ import Foundation
 import UIKit
 import SwiftUI
 
-class DemoGroupViewController: UIViewController {
+public class DemoGroupViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private let demoGroup: any DemoGroup.Type
+    private var selectedDemoGroup: (any DemoGroup.Type)?
+    private let demoGroups: [any DemoGroup.Type]
+    private let sortedDemoGroups: [SortedItem]
     private let reuseIdentifier = "tableCell"
     private var tweakPresentationController: TweakPresentationController?
 
@@ -26,18 +28,22 @@ class DemoGroupViewController: UIViewController {
 
     // MARK: - Init
 
-    init(demoGroup: any DemoGroup.Type) {
-        self.demoGroup = demoGroup
+    public init(demoGroups: [any DemoGroup.Type]) {
+        self.demoGroups = demoGroups
+        self.sortedDemoGroups = Self.mapAndSort(demoGroups)
+
         super.init(nibName: nil, bundle: nil)
+
+        updateSelectedDemoGroup(sortedDemoGroups.first.map { demoGroups[$0.originalIndex] })
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
 
     // MARK: - Lifecycle
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
@@ -46,7 +52,6 @@ class DemoGroupViewController: UIViewController {
 
     private func setup() {
         navigationItem.titleView = demoGroupSelectorView
-        demoGroupSelectorView.title = demoGroup.groupTitle
 
         view.addSubview(tableView)
         tableView.fillInSuperview()
@@ -54,12 +59,17 @@ class DemoGroupViewController: UIViewController {
 
     // MARK: - Private methods
 
+    private func updateSelectedDemoGroup(_ demoGroup: (any DemoGroup.Type)?) {
+        selectedDemoGroup = demoGroup
+        demoGroupSelectorView.title = demoGroup?.groupTitle ?? "??"
+    }
+
     private func present(viewController: UIViewController, for demoable: any Demoable) {
         configure(viewController: viewController, for: demoable)
 
         switch demoable.presentation {
         case .navigationController:
-            let navigationController = UINavigationController(rootViewController: viewController)
+            let navigationController = viewController.wrapInNavigationController()
 
             if demoable.overridesModalPresentationStyle {
                 navigationController.modalPresentationStyle = viewController.modalPresentationStyle
@@ -70,7 +80,7 @@ class DemoGroupViewController: UIViewController {
             present(navigationController, animated: true)
         case .sheet(let detents):
             viewController.modalPresentationStyle = .pageSheet
-            viewController.sheetPresentationController?.detents = detents
+            viewController.withDetents(detents)
             present(viewController, animated: true)
         case .none:
             present(viewController, animated: true)
@@ -96,20 +106,28 @@ class DemoGroupViewController: UIViewController {
             cornerAnchoringView.fillInSuperview(withinSafeAre: true)
         }
     }
+
+    // MARK: - Static methods
+
+    static private func mapAndSort(_ demoGroups: [any DemoGroup.Type]) -> [SortedItem] {
+        let sortedItems = demoGroups.enumerated().map { SortedItem(originalIndex: $0.offset, title: $0.element.groupTitle) }
+        return sortedItems.sorted(by: { $0.title <= $1.title })
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension DemoGroupViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        demoGroup.numberOfDemos
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        selectedDemoGroup?.numberOfDemos ?? 0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let selectedDemoGroup else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
         var config = cell.defaultContentConfiguration()
-        config.text = demoGroup.demoGroupItem(for: indexPath.row).groupItemTitle
+        config.text = selectedDemoGroup.demoGroupItem(for: indexPath.row).groupItemTitle
         cell.contentConfiguration = config
 
         return cell
@@ -119,10 +137,12 @@ extension DemoGroupViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension DemoGroupViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let demoable = demoGroup.demoable(for: indexPath.row)
+        guard let selectedDemoGroup else { return }
+
+        let demoable = selectedDemoGroup.demoable(for: indexPath.row)
         let viewController = ViewControllerMapper.viewController(for: demoable)
         present(viewController: viewController, for: demoable)
     }
@@ -132,6 +152,24 @@ extension DemoGroupViewController: UITableViewDelegate {
 
 extension DemoGroupViewController: DemoGroupSelectorViewDelegate {
     func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView) {
-        print("ℹ️ \(String(describing: Self.self)).\(#function)")
+        let selectionController = SortedItemSelectionViewController(
+            sortedItems: sortedDemoGroups,
+            selectedIndex: nil,
+            delegate: self
+        ).wrapInNavigationController(withTitle: "Demo groups").withDetents([.medium(), .large()])
+
+        present(selectionController, animated: true)
+    }
+}
+
+// MARK: - SortedItemSelectionViewControllerDelegate
+
+extension DemoGroupViewController: SortedItemSelectionViewControllerDelegate {
+    func sortedItemSelectionViewController(_ viewController: SortedItemSelectionViewController, didSelectItemAt index: Int) {
+        let originalDemoGroupIndex = sortedDemoGroups[index].originalIndex
+        updateSelectedDemoGroup(demoGroups[originalDemoGroupIndex])
+
+        viewController.dismiss(animated: true)
+        tableView.reloadData()
     }
 }
