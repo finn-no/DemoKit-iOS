@@ -34,7 +34,7 @@ class DemoGroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        title = demoGroup.title
+        title = demoGroup.groupTitle
     }
 
     // MARK: - Setup
@@ -101,7 +101,7 @@ extension DemoGroupViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
         var config = cell.defaultContentConfiguration()
-        config.text = demoGroup.demoGroupItem(for: indexPath.row).title
+        config.text = demoGroup.demoGroupItem(for: indexPath.row).groupItemTitle
         cell.contentConfiguration = config
 
         return cell
