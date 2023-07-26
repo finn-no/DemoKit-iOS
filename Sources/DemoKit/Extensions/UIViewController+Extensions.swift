@@ -38,3 +38,21 @@ extension UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: - Wrapping
+
+extension UIViewController {
+    func wrapInNavigationController(withTitle title: String? = nil) -> UINavigationController {
+        if let title {
+            self.title = title
+        }
+
+        return UINavigationController(rootViewController: self)
+    }
+
+    @discardableResult
+    func withDetents(_ detents: [UISheetPresentationController.Detent]) -> Self {
+        sheetPresentationController?.detents = detents
+        return self
+    }
+}

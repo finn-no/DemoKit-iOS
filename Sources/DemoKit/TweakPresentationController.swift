@@ -21,10 +21,9 @@ class TweakPresentationController {
 extension TweakPresentationController: CornerAnchoringViewDelegate {
     func cornerAnchoringViewDidSelectTweakButton(_ cornerAnchoringView: CornerAnchoringView) {
         let tweakTableViewController = TweakTableViewController(tweakableDemo: tweakableDemo)
-        tweakTableViewController.title = "Tweaks"
+            .wrapInNavigationController(withTitle: "Tweaks")
+            .withDetents([.medium(), .large()])
 
-        let navigationController = UINavigationController(rootViewController: tweakTableViewController)
-        navigationController.sheetPresentationController?.detents = [.medium(), .large()]
-        demoViewController.present(navigationController, animated: true)
+        demoViewController.present(tweakTableViewController, animated: true)
     }
 }
