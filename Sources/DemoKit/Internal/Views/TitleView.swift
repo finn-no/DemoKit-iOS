@@ -13,7 +13,7 @@ class TitleView: UIView {
 
     var title: String = "" {
         didSet {
-            button.setTitle(title, for: .normal)
+            button.configuration?.title = title
         }
     }
 
@@ -33,9 +33,7 @@ class TitleView: UIView {
 
         let button = UIButton(configuration: buttonConfiguration)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
-        button.setTitleColor(.label, for: .disabled)
 
         button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
 
@@ -65,10 +63,14 @@ class TitleView: UIView {
     // MARK: - Private methods
 
     private func updateButtonState() {
-        button.isEnabled = isClickable
+        button.isUserInteractionEnabled = isClickable
+        button.tintColor = isClickable ? .systemBlue : .label
 
         if isClickable {
-            button.configuration?.image = UIImage(systemName: "chevron.down")
+            button.configuration?.image = UIImage(
+                systemName: "chevron.down",
+                withConfiguration: UIImage.SymbolConfiguration(scale: .small)
+            )
         } else {
             button.configuration?.image = nil
         }
