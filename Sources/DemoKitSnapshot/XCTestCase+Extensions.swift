@@ -31,7 +31,7 @@ extension XCTestCase {
 extension XCTestCase {
     public func snapshotTest(
         demoable: any Demoable,
-        record: Bool = true,
+        record: Bool = false,
         file: StaticString = #file,
         line: UInt = #line
     ) {
