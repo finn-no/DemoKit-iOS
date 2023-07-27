@@ -1,8 +1,7 @@
 import Foundation
 
-/// Found here:
-/// https://stackoverflow.com/a/50202999
 extension String {
+    /// Credit: https://stackoverflow.com/a/50202999
     var titleCase: String {
         replacingOccurrences(
             of: "([A-Z])",
