@@ -43,8 +43,10 @@ class DemoGroupSelectorView: UIView {
 
     // MARK: - Init
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(delegate: DemoGroupSelectorViewDelegate) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
         setup()
     }
 
