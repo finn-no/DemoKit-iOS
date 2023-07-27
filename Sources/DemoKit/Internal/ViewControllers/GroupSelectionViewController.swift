@@ -63,7 +63,7 @@ extension GroupSelectionViewController: UITableViewDataSource {
         let sortedItem = sortedItems[indexPath.row]
         var config = cell.defaultContentConfiguration()
         config.text = sortedItem.title
-        config.textProperties.color = sortedItem.originalIndex == selectedOriginalIndex ? .systemCyan : .label
+        config.textProperties.color = sortedItem.originalIndex == selectedOriginalIndex ? .systemBlue : .label
 
         cell.contentConfiguration = config
 
