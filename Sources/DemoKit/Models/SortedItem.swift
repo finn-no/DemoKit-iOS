@@ -5,3 +5,9 @@ struct SortedItem {
     let originalIndex: Int
     let title: String
 }
+
+extension [SortedItem] {
+    func sortByTitle() -> [SortedItem] {
+        sorted(by: { $0.title < $1.title })
+    }
+}
