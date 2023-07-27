@@ -2,13 +2,13 @@ import Foundation
 import UIKit
 import SwiftUI
 
-public class DemoGroupViewController: UIViewController {
+public class DemoKitViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private var selectedDemoGroup: (any DemoGroup.Type)?
     private let demoGroups: [any DemoGroup.Type]
     private let sortedDemoGroups: [SortedItem]
+    private var selectedDemoGroup: (any DemoGroup.Type)?
     private var tweakPresentationController: TweakPresentationController?
     private lazy var demoGroupSelectorView = DemoGroupSelectorView(delegate: self)
     private lazy var groupItemsTableView = GroupItemsTableView(delegate: self)
@@ -108,7 +108,7 @@ public class DemoGroupViewController: UIViewController {
 
 // MARK: - DemoGroupSelectorViewDelegate
 
-extension DemoGroupViewController: DemoGroupSelectorViewDelegate {
+extension DemoKitViewController: DemoGroupSelectorViewDelegate {
     func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView) {
         let selectionController = SortedItemSelectionViewController(
             sortedItems: sortedDemoGroups,
@@ -122,7 +122,7 @@ extension DemoGroupViewController: DemoGroupSelectorViewDelegate {
 
 // MARK: - SortedItemSelectionViewControllerDelegate
 
-extension DemoGroupViewController: SortedItemSelectionViewControllerDelegate {
+extension DemoKitViewController: SortedItemSelectionViewControllerDelegate {
     func sortedItemSelectionViewController(_ viewController: SortedItemSelectionViewController, didSelectItemAt index: Int) {
         let originalDemoGroupIndex = sortedDemoGroups[index].originalIndex
         let demoGroup = demoGroups[originalDemoGroupIndex]
@@ -134,7 +134,7 @@ extension DemoGroupViewController: SortedItemSelectionViewControllerDelegate {
 
 // MARK: - GroupItemsTableViewDelegate
 
-extension DemoGroupViewController: GroupItemsTableViewDelegate {
+extension DemoKitViewController: GroupItemsTableViewDelegate {
     func groupItemsTableView(_ viewController: GroupItemsTableView, didSelectItemAt index: Int) {
         guard let selectedDemoGroup else { return }
 
