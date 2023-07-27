@@ -40,7 +40,7 @@ extension XCTestCase {
         let viewController = ViewControllerMapper.viewController(for: demoable)
         viewController.view.layoutIfNeeded()
 
-        if let tweakableDemo = demoable as? TweakableDemo, tweakableDemo.numberOfTweaks > 0 {
+        if let tweakableDemo = demoable as? TweakableDemo, tweakableDemo.shouldSnapshotTweaks, tweakableDemo.numberOfTweaks > 0 {
             for tweakIndex in (0..<tweakableDemo.numberOfTweaks) {
                 let tweak = tweakableDemo.tweak(for: tweakIndex)
                 tweakableDemo.configure(forTweakAt: tweakIndex)
