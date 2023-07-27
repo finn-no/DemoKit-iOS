@@ -11,7 +11,7 @@ public class DemoKitViewController: UIViewController {
     private var selectedDemoGroup: (any DemoGroup.Type)?
     private var tweakPresentationController: TweakPresentationController?
     private var hasPresentedLastSelectedDemo = false
-    private lazy var demoGroupSelectorView = DemoGroupSelectorView(delegate: self)
+    private lazy var titleView = TitleView(delegate: self)
     private lazy var groupItemsTableView = GroupItemsTableView(delegate: self)
 
     // MARK: - Init
@@ -64,8 +64,8 @@ public class DemoKitViewController: UIViewController {
     // MARK: - Setup
 
     private func setup() {
-        navigationItem.titleView = demoGroupSelectorView
-        demoGroupSelectorView.isClickable = demoGroups.count > 1
+        navigationItem.titleView = titleView
+        titleView.isClickable = demoGroups.count > 1
 
         view.addSubview(groupItemsTableView)
         groupItemsTableView.fillInSuperview()
@@ -84,7 +84,7 @@ public class DemoKitViewController: UIViewController {
 
     private func updateSelectedDemoGroup(_ demoGroup: (any DemoGroup.Type)?) {
         selectedDemoGroup = demoGroup
-        demoGroupSelectorView.title = demoGroup?.groupTitle ?? "??"
+        titleView.title = demoGroup?.groupTitle ?? "??"
         groupItemsTableView.demoGroup = demoGroup
     }
 
@@ -141,10 +141,10 @@ public class DemoKitViewController: UIViewController {
     }
 }
 
-// MARK: - DemoGroupSelectorViewDelegate
+// MARK: - TitleViewDelegate
 
-extension DemoKitViewController: DemoGroupSelectorViewDelegate {
-    func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView) {
+extension DemoKitViewController: TitleViewDelegate {
+    func titleViewWasSelected(_ view: TitleView) {
         let selectionController = GroupSelectionViewController(
             sortedItems: sortedDemoGroups,
             selectedOriginalIndex: demoGroups.firstIndex(where: { $0 == selectedDemoGroup }),

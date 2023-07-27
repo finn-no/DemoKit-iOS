@@ -1,15 +1,15 @@
 import Foundation
 import UIKit
 
-protocol DemoGroupSelectorViewDelegate: AnyObject {
-    func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView)
+protocol TitleViewDelegate: AnyObject {
+    func titleViewWasSelected(_ view: TitleView)
 }
 
-class DemoGroupSelectorView: UIView {
+class TitleView: UIView {
 
     // MARK: - Internal properties
 
-    weak var delegate: DemoGroupSelectorViewDelegate?
+    weak var delegate: TitleViewDelegate?
 
     var title: String = "" {
         didSet {
@@ -44,7 +44,7 @@ class DemoGroupSelectorView: UIView {
 
     // MARK: - Init
 
-    init(delegate: DemoGroupSelectorViewDelegate) {
+    init(delegate: TitleViewDelegate) {
         self.delegate = delegate
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +77,6 @@ class DemoGroupSelectorView: UIView {
     // MARK: - Actions
 
     @objc private func handleButtonTap() {
-        delegate?.demoGroupSelectorViewWasSelected(self)
+        delegate?.titleViewWasSelected(self)
     }
 }
