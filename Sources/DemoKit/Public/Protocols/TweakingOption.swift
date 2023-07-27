@@ -14,6 +14,6 @@ public extension TweakingOption where Self: RawRepresentable, RawValue == String
     }
 
     var title: String {
-        rawValue.titleCase
+        rawValue.presentationCase
     }
 }
