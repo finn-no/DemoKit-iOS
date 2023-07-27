@@ -129,6 +129,10 @@ public class DemoKitViewController: UIViewController {
             viewController.view.addSubview(cornerAnchoringView)
             cornerAnchoringView.fillInSuperview(withinSafeAre: true)
         }
+
+        if var viewControllerAccessor = demoable as? ViewControllerAccessor {
+            viewControllerAccessor.viewController = viewController
+        }
     }
 
     // MARK: - Static methods
