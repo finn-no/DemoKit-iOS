@@ -39,6 +39,7 @@ public class DemoGroupViewController: UIViewController {
 
     private func setup() {
         navigationItem.titleView = demoGroupSelectorView
+        demoGroupSelectorView.isClickable = sortedDemoGroups.count > 1
 
         view.addSubview(groupItemsTableView)
         groupItemsTableView.fillInSuperview()

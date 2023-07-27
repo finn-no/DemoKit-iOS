@@ -17,9 +17,9 @@ class DemoGroupSelectorView: UIView {
         }
     }
 
-    var shouldShowChevron: Bool = true {
+    var isClickable: Bool = true {
         didSet {
-            updateButtonImage()
+            updateButtonState()
         }
     }
 
@@ -35,6 +35,7 @@ class DemoGroupSelectorView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
+        button.setTitleColor(.label, for: .disabled)
 
         button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
 
@@ -55,7 +56,7 @@ class DemoGroupSelectorView: UIView {
     // MARK: - Setup
 
     private func setup() {
-        updateButtonImage()
+        updateButtonState()
 
         addSubview(button)
         button.fillInSuperview()
@@ -63,12 +64,13 @@ class DemoGroupSelectorView: UIView {
 
     // MARK: - Private methods
 
-    private func updateButtonImage() {
-        if shouldShowChevron {
-            let image = UIImage(systemName: "chevron.down")
-            button.setImage(image, for: .normal)
+    private func updateButtonState() {
+        button.isEnabled = isClickable
+
+        if isClickable {
+            button.configuration?.image = UIImage(systemName: "chevron.down")
         } else {
-            button.setImage(nil, for: .normal)
+            button.configuration?.image = nil
         }
     }
 
