@@ -1,17 +1,17 @@
 import Foundation
 import UIKit
 
-protocol SortedItemSelectionViewControllerDelegate: AnyObject {
-    func sortedItemSelectionViewController(_ viewController: SortedItemSelectionViewController, didSelectItemAt index: Int)
+protocol GroupSelectionViewControllerDelegate: AnyObject {
+    func groupSelectionViewController(_ viewController: GroupSelectionViewController, didSelectItem sortedItem: SortedItem)
 }
 
-class SortedItemSelectionViewController: UIViewController {
+class GroupSelectionViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private weak var delegate: SortedItemSelectionViewControllerDelegate?
+    private weak var delegate: GroupSelectionViewControllerDelegate?
     private let sortedItems: [SortedItem]
-    private let selectedIndex: Int?
+    private let selectedOriginalIndex: Int?
     private let reuseIdentifier = "tableCell"
 
     private lazy var tableView: UITableView = {
@@ -24,9 +24,9 @@ class SortedItemSelectionViewController: UIViewController {
 
     // MARK: - Init
 
-    init(sortedItems: [SortedItem], selectedIndex: Int?, delegate: SortedItemSelectionViewControllerDelegate) {
+    init(sortedItems: [SortedItem], selectedOriginalIndex: Int?, delegate: GroupSelectionViewControllerDelegate) {
         self.sortedItems = sortedItems
-        self.selectedIndex = selectedIndex
+        self.selectedOriginalIndex = selectedOriginalIndex
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,7 +52,7 @@ class SortedItemSelectionViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 
-extension SortedItemSelectionViewController: UITableViewDataSource {
+extension GroupSelectionViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sortedItems.count
     }
@@ -60,9 +60,10 @@ extension SortedItemSelectionViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
+        let sortedItem = sortedItems[indexPath.row]
         var config = cell.defaultContentConfiguration()
-        config.text = sortedItems[indexPath.row].title
-        config.textProperties.color = indexPath.row == selectedIndex ? .systemCyan : .label
+        config.text = sortedItem.title
+        config.textProperties.color = sortedItem.originalIndex == selectedOriginalIndex ? .systemCyan : .label
 
         cell.contentConfiguration = config
 
@@ -72,9 +73,10 @@ extension SortedItemSelectionViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension SortedItemSelectionViewController: UITableViewDelegate {
+extension GroupSelectionViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.sortedItemSelectionViewController(self, didSelectItemAt: indexPath.row)
+        let sortedItem = sortedItems[indexPath.row]
+        delegate?.groupSelectionViewController(self, didSelectItem: sortedItem)
     }
 }

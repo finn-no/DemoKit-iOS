@@ -65,7 +65,7 @@ public class DemoKitViewController: UIViewController {
 
     private func setup() {
         navigationItem.titleView = demoGroupSelectorView
-        demoGroupSelectorView.isClickable = sortedDemoGroups.count > 1
+        demoGroupSelectorView.isClickable = demoGroups.count > 1
 
         view.addSubview(groupItemsTableView)
         groupItemsTableView.fillInSuperview()
@@ -145,9 +145,9 @@ public class DemoKitViewController: UIViewController {
 
 extension DemoKitViewController: DemoGroupSelectorViewDelegate {
     func demoGroupSelectorViewWasSelected(_ view: DemoGroupSelectorView) {
-        let selectionController = SortedItemSelectionViewController(
+        let selectionController = GroupSelectionViewController(
             sortedItems: sortedDemoGroups,
-            selectedIndex: nil,
+            selectedOriginalIndex: demoGroups.firstIndex(where: { $0 == selectedDemoGroup }),
             delegate: self
         ).wrapInNavigationController(withTitle: "Demo groups").withDetents([.medium(), .large()])
 
@@ -155,15 +155,14 @@ extension DemoKitViewController: DemoGroupSelectorViewDelegate {
     }
 }
 
-// MARK: - SortedItemSelectionViewControllerDelegate
+// MARK: - GroupSelectionViewControllerDelegate
 
-extension DemoKitViewController: SortedItemSelectionViewControllerDelegate {
-    func sortedItemSelectionViewController(_ viewController: SortedItemSelectionViewController, didSelectItemAt index: Int) {
-        let originalDemoGroupIndex = sortedDemoGroups[index].originalIndex
-        let demoGroup = demoGroups[originalDemoGroupIndex]
+extension DemoKitViewController: GroupSelectionViewControllerDelegate {
+    func groupSelectionViewController(_ viewController: GroupSelectionViewController, didSelectItem sortedItem: SortedItem) {
+        let demoGroup = demoGroups[sortedItem.originalIndex]
         updateSelectedDemoGroup(demoGroup)
 
-        State.selectedGroupIndex = originalDemoGroupIndex
+        State.selectedGroupIndex = sortedItem.originalIndex
 
         viewController.dismiss(animated: true)
     }
