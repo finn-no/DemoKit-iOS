@@ -65,6 +65,8 @@ extension TweakTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        State.selectedTweakIndex = indexPath.row
+
         tweakableDemo.configure(forTweakAt: indexPath.row)
         dismiss(animated: true)
     }

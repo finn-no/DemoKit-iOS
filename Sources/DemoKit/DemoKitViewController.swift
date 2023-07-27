@@ -10,6 +10,7 @@ public class DemoKitViewController: UIViewController {
     private let sortedDemoGroups: [SortedItem]
     private var selectedDemoGroup: (any DemoGroup.Type)?
     private var tweakPresentationController: TweakPresentationController?
+    private var hasPresentedLastSelectedDemo = false
     private lazy var demoGroupSelectorView = DemoGroupSelectorView(delegate: self)
     private lazy var groupItemsTableView = GroupItemsTableView(delegate: self)
 
@@ -20,8 +21,6 @@ public class DemoKitViewController: UIViewController {
         self.sortedDemoGroups = Self.mapAndSort(demoGroups)
 
         super.init(nibName: nil, bundle: nil)
-
-        updateSelectedDemoGroup(sortedDemoGroups.first.map { demoGroups[$0.originalIndex] })
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -32,7 +31,34 @@ public class DemoKitViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setupInitialDemoGroup()
         setup()
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Prevent presenting the last selected demo, if the demo is dismissed.
+        // Users of this lib has the option to present whatever `UIViewController` they want, so this seems to be
+        // the easiest way of figuring out when we should reset the state.
+        if hasPresentedLastSelectedDemo {
+            State.selectedDemoableIndex = nil
+            State.selectedTweakIndex = nil
+        }
+
+        // Present the last selected demo, if possible.
+        if let selectedDemoableIndex = State.selectedDemoableIndex, let selectedDemoGroup {
+            let demoable = selectedDemoGroup.demoable(for: selectedDemoableIndex)
+            let viewController = ViewControllerMapper.viewController(for: demoable)
+
+            // Configure for the last selected tweak, if possible.
+            if let selectedTweakIndex = State.selectedTweakIndex, let tweakableDemo = demoable as? TweakableDemo {
+                tweakableDemo.configure(forTweakAt: selectedTweakIndex)
+            }
+
+            hasPresentedLastSelectedDemo = true
+            present(viewController: viewController, for: demoable)
+        }
     }
 
     // MARK: - Setup
@@ -46,6 +72,15 @@ public class DemoKitViewController: UIViewController {
     }
 
     // MARK: - Private methods
+
+    private func setupInitialDemoGroup() {
+        // Try to find the last selected group. Will fallback to the first in the list, if not found.
+        if let selectedGroupIndex = State.selectedGroupIndex, demoGroups.indices.contains(selectedGroupIndex) {
+            updateSelectedDemoGroup(demoGroups[selectedGroupIndex])
+        } else {
+            updateSelectedDemoGroup(sortedDemoGroups.first.map { demoGroups[$0.originalIndex] })
+        }
+    }
 
     private func updateSelectedDemoGroup(_ demoGroup: (any DemoGroup.Type)?) {
         selectedDemoGroup = demoGroup
@@ -128,6 +163,8 @@ extension DemoKitViewController: SortedItemSelectionViewControllerDelegate {
         let demoGroup = demoGroups[originalDemoGroupIndex]
         updateSelectedDemoGroup(demoGroup)
 
+        State.selectedGroupIndex = originalDemoGroupIndex
+
         viewController.dismiss(animated: true)
     }
 }
@@ -137,6 +174,9 @@ extension DemoKitViewController: SortedItemSelectionViewControllerDelegate {
 extension DemoKitViewController: GroupItemsTableViewDelegate {
     func groupItemsTableView(_ viewController: GroupItemsTableView, didSelectItemAt index: Int) {
         guard let selectedDemoGroup else { return }
+
+        State.selectedDemoableIndex = index
+        State.selectedTweakIndex = nil
 
         let demoable = selectedDemoGroup.demoable(for: index)
         let viewController = ViewControllerMapper.viewController(for: demoable)
