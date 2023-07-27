@@ -142,6 +142,7 @@ extension XCTestCase {
         file: StaticString,
         line: UInt
     ) {
+        UIView.setAnimationsEnabled(false)
         let subpixelThreshold: UInt8 = 5
         let userInterfaceStyle: [UIUserInterfaceStyle] = [.light, .dark]
 
