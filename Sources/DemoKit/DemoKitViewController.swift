@@ -114,12 +114,17 @@ public class DemoKitViewController: UIViewController {
     private func configure(viewController: UIViewController, for demoable: any Demoable) {
         viewController.setupDismissal(for: demoable)
         viewController.title = demoable.title
-        viewController.navigationItem.rightBarButtonItems = demoable.rightBarButtonItems
 
+        // Bar button items.
+        viewController.navigationItem.rightBarButtonItems = demoable.rightBarButtonItems
+        viewController.navigationItem.leftBarButtonItems = demoable.leftBarButtonItems
+
+        // Modal presentation style.
         if !demoable.overridesModalPresentationStyle {
             viewController.modalPresentationStyle = .fullScreen
         }
 
+        // Tweakability.
         if let tweakableDemo = demoable as? any TweakableDemo {
             let tweakPresentationController = TweakPresentationController(demoViewController: viewController, tweakableDemo: tweakableDemo)
             self.tweakPresentationController = tweakPresentationController
@@ -130,6 +135,7 @@ public class DemoKitViewController: UIViewController {
             cornerAnchoringView.fillInSuperview(withinSafeAre: true)
         }
 
+        // Accessing the wrapping viewController.
         if var viewControllerAccessor = demoable as? ViewControllerAccessor {
             viewControllerAccessor.viewController = viewController
         }

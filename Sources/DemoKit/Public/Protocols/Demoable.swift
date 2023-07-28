@@ -9,6 +9,8 @@ public protocol Demoable {
     var overridesModalPresentationStyle: Bool { get }
     var dismissKind: DismissKind { get }
     var presentation: DemoablePresentation { get }
+
+    var leftBarButtonItems: [UIBarButtonItem] { get }
     var rightBarButtonItems: [UIBarButtonItem] { get }
 
     var shouldSnapshotTest: Bool { get }
@@ -28,6 +30,8 @@ public extension Demoable {
     var overridesModalPresentationStyle: Bool { false }
     var dismissKind: DismissKind { .doubleTap }
     var presentation: DemoablePresentation { .none }
+
+    var leftBarButtonItems: [UIBarButtonItem] { [] }
     var rightBarButtonItems: [UIBarButtonItem] { [] }
 
     var shouldSnapshotTest: Bool { true }
