@@ -136,7 +136,7 @@ public class DemoKitViewController: UIViewController {
         }
 
         // Accessing the wrapping viewController.
-        if var viewControllerAccessor = demoable as? ViewControllerAccessor {
+        if let viewControllerAccessor = demoable as? ViewControllerAccessor {
             viewControllerAccessor.viewController = viewController
         }
     }
