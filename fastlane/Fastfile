@@ -1,4 +1,4 @@
-fastlane_version "2.146.0"
+fastlane_version "2.214.0"
 
 ENV['FASTLANE_HIDE_CHANGELOG'] = 'true'
 skip_docs
