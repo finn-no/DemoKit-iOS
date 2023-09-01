@@ -4,7 +4,7 @@ ENV['FASTLANE_HIDE_CHANGELOG'] = 'true'
 skip_docs
 
 desc "Create a new DemoKit version"
-lane :make_finniverkit_version do |options|
+lane :create_new_tag do |options|
   make_release("DemoKit-iOS", "DemoKit", options)
 end
 
