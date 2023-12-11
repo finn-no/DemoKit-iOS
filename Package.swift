@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "DemoKitSnapshot", targets: ["DemoKitSnapshot"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pimms/swift-snapshot-testing.git", exact: "1.9.666"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", exact: "1.15.1"),
     ],
     targets: [
         .target(name: "DemoKit"),
