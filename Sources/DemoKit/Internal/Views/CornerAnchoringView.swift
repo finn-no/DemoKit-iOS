@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol CornerAnchoringViewDelegate: AnyObject {
     func cornerAnchoringViewDidSelectTweakButton(_ cornerAnchoringView: CornerAnchoringView)
 }

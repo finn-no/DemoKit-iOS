@@ -1,6 +1,7 @@
 import Foundation
 
 /// Represents a specific tweak/configuration/setup for a `TweakableDemo`.
+@MainActor
 public protocol TweakingOption {
     var identifier: String { get }
     var title: String { get }

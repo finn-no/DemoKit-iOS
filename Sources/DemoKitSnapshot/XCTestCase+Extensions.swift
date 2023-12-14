@@ -7,6 +7,7 @@ import SnapshotTesting
 // MARK: - DemoGroup
 
 extension XCTestCase {
+    @MainActor
     public func snapshotTest(
         demoGroup: any DemoGroup.Type,
         record: Bool = false,
@@ -29,6 +30,7 @@ extension XCTestCase {
 // MARK: - Demoable
 
 extension XCTestCase {
+    @MainActor
     public func snapshotTest(
         demoable: any Demoable,
         record: Bool = false,

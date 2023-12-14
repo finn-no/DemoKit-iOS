@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 protocol GroupItemsTableViewDelegate: AnyObject {
     func groupItemsTableView(_ viewController: GroupItemsTableView, didSelectItemAt index: Int)
 }

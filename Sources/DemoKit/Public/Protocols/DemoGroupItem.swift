@@ -1,6 +1,7 @@
 import Foundation
 
 /// Represents a demo for a single item within a `DemoGroup`.
+@MainActor
 public protocol DemoGroupItem {
     var groupItemIdentifier: String { get }
     var groupItemTitle: String { get }

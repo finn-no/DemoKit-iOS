@@ -5,7 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pimms/swift-snapshot-testing.git",
       "state" : {
-        "revision" : "b44b563e6ddc5a613a107fb57626047a7f1d4e1a"
+        "revision" : "b44b563e6ddc5a613a107fb57626047a7f1d4e1a",
+        "version" : "1.9.666"
       }
     }
   ],

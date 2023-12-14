@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 /// Use to setup a group of demo views that are related. I.e. components, colors or views within a specific domain.
+@MainActor
 public protocol DemoGroup {
     static var numberOfDemos: Int { get }
     static var groupTitle: String { get }

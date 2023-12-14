@@ -1,6 +1,7 @@
 import Foundation
 
 /// A demo that is tweakable.
+@MainActor
 public protocol TweakableDemo: Demoable {
     var numberOfTweaks: Int { get }
     var shouldSnapshotTweaks: Bool { get }
