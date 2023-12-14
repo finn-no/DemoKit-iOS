@@ -24,7 +24,8 @@ let package = Package(
             dependencies: [
                 "DemoKit",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
-            ]
+            ],
+            swiftSettings: .strictConcurrency
         )
     ]
 )

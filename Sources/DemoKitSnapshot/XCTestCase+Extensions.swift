@@ -71,6 +71,7 @@ extension XCTestCase {
 // MARK: - SwiftUI
 
 extension XCTestCase {
+    @MainActor
     public func snapshotTest(
         view: any View,
         record: Bool = false,
@@ -93,6 +94,7 @@ extension XCTestCase {
 // MARK: - UIView and UIViewController
 
 extension XCTestCase {
+    @MainActor
     public func snapshotTest(
         uiView: UIView,
         record: Bool = false,
@@ -113,6 +115,7 @@ extension XCTestCase {
         )
     }
 
+    @MainActor
     public func snapshotTest(
         viewController: UIViewController,
         record: Bool = false,
@@ -136,6 +139,7 @@ extension XCTestCase {
 // MARK: - Internal methods
 
 extension XCTestCase {
+    @MainActor
     func performSnapshots(
         viewController: UIViewController,
         record: Bool,
