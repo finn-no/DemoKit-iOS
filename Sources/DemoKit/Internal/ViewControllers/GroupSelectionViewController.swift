@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 protocol GroupSelectionViewControllerDelegate: AnyObject {
     func groupSelectionViewController(_ viewController: GroupSelectionViewController, didSelectItem sortedItem: SortedItem)
 }

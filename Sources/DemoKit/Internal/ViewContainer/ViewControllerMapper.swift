@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
+@MainActor
 struct ViewControllerMapper {
     private init() {}
 

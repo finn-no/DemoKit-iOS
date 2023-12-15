@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 /// A single item that can be demoed.
+@MainActor
 public protocol Demoable {
     var identifier: String { get }
     var title: String { get }
