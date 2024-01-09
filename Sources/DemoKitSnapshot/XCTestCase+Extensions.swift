@@ -149,7 +149,6 @@ extension XCTestCase {
         line: UInt
     ) {
         UIView.setAnimationsEnabled(false)
-        let subpixelThreshold: UInt8 = 5
         let userInterfaceStyle: [UIUserInterfaceStyle] = [.light, .dark]
 
         userInterfaceStyle.forEach { userInterfaceStyle in
@@ -165,7 +164,6 @@ extension XCTestCase {
                     matching: viewController,
                     as: .image(
                         on: device.imageConfig,
-                        subpixelThreshold: subpixelThreshold,
                         traits: traits
                     ),
                     named: name,
