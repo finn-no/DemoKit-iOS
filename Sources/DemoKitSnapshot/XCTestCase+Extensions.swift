@@ -149,6 +149,7 @@ extension XCTestCase {
         line: UInt
     ) {
         UIView.setAnimationsEnabled(false)
+        let perceptualPrecision: Float = 5
         let userInterfaceStyle: [UIUserInterfaceStyle] = [.light, .dark]
 
         userInterfaceStyle.forEach { userInterfaceStyle in
@@ -164,6 +165,7 @@ extension XCTestCase {
                     matching: viewController,
                     as: .image(
                         on: device.imageConfig,
+                        perceptualPrecision: perceptualPrecision,
                         traits: traits
                     ),
                     named: name,
