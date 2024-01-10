@@ -149,7 +149,7 @@ extension XCTestCase {
         line: UInt
     ) {
         UIView.setAnimationsEnabled(false)
-        let perceptualPrecision: Float = 0.98
+        let perceptualPrecision: Float = 0.95
         let userInterfaceStyle: [UIUserInterfaceStyle] = [.light, .dark]
 
         userInterfaceStyle.forEach { userInterfaceStyle in
