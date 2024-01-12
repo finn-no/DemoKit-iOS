@@ -34,6 +34,9 @@ extension XCTestCase {
     public func snapshotTest(
         demoable: any Demoable,
         record: Bool = false,
+        // https://github.com/pointfreeco/swift-snapshot-testing/pull/628#issuecomment-1256363278
+        precision: Float = 0.98,
+        perceptualPrecision: Float = 0.98,
         file: StaticString = #file,
         line: UInt = #line
     ) {
@@ -50,8 +53,10 @@ extension XCTestCase {
                 performSnapshots(
                     viewController: viewController,
                     record: record,
-                    testName: demoable.identifier,
+                    testName: demoable.identifier, 
                     tweakName: tweak.testName,
+                    precision: precision,
+                    perceptualPrecision: perceptualPrecision,
                     file: file,
                     line: line
                 )
@@ -61,6 +66,8 @@ extension XCTestCase {
                 viewController: viewController,
                 record: record,
                 testName: demoable.identifier,
+                precision: precision,
+                perceptualPrecision: perceptualPrecision,
                 file: file,
                 line: line
             )
@@ -145,12 +152,12 @@ extension XCTestCase {
         record: Bool,
         testName: String,
         tweakName: String? = nil,
+        precision: Float = 0.98,
+        perceptualPrecision: Float = 0.98,
         file: StaticString,
         line: UInt
     ) {
         UIView.setAnimationsEnabled(false)
-        let precision: Float = 0.98
-        let perceptualPrecision: Float = 0.98
         let userInterfaceStyle: [UIUserInterfaceStyle] = [.light, .dark]
 
         userInterfaceStyle.forEach { userInterfaceStyle in
