@@ -35,7 +35,7 @@ extension XCTestCase {
         demoable: any Demoable,
         record: Bool = false,
         // https://github.com/pointfreeco/swift-snapshot-testing/pull/628#issuecomment-1256363278
-        precision: Float = 0.98,
+        precision: Float = 0.997,
         perceptualPrecision: Float = 0.98,
         file: StaticString = #file,
         line: UInt = #line
@@ -152,7 +152,7 @@ extension XCTestCase {
         record: Bool,
         testName: String,
         tweakName: String? = nil,
-        precision: Float = 0.98,
+        precision: Float = 0.997,
         perceptualPrecision: Float = 0.98,
         file: StaticString,
         line: UInt
