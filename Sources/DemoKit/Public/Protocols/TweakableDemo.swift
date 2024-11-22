@@ -1,7 +1,7 @@
 import Foundation
 
 /// A demo that is tweakable. Make your `Demoable` conform to this protocol if you want to demo multiple presentations/configurations of your demo.
-/// 
+///
 /// Tweakable demos will get a floating button presented in the corner of the demo that presents a list of tweaks for that specific demo.
 ///
 /// Tweaks can be useful if you have a view that can change appearance/layout dependending on the way the view is configured.
