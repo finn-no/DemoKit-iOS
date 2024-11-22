@@ -2,6 +2,13 @@ import Foundation
 import SwiftUI
 import UIKit
 
+/// Maps any supported `Demoable` into a `UIViewController` that can be presented.
+///
+/// Types that we currently support:
+/// - `UIView`
+/// - `UIViewController`
+/// - `View`
+/// - `PreviewProvider`
 @MainActor
 struct ViewControllerMapper {
     private init() {}
