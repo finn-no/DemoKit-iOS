@@ -6,6 +6,9 @@ protocol GroupItemsTableViewDelegate: AnyObject {
     func groupItemsTableView(_ viewController: GroupItemsTableView, didSelectItemAt index: Int)
 }
 
+/// Used in `DemoKitViewController` to present the list of demos within a `DemoGroup`.
+///
+/// Demos within the provided `DemoGroup` are sorted alphabetically grouped by first letter to allow for easy overview of available demos.
 class GroupItemsTableView: UIView {
 
     // MARK: - Internal properties

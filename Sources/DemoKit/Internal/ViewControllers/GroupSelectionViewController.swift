@@ -3,9 +3,13 @@ import UIKit
 
 @MainActor
 protocol GroupSelectionViewControllerDelegate: AnyObject {
-    func groupSelectionViewController(_ viewController: GroupSelectionViewController, didSelectItem sortedItem: SortedItem)
+    func groupSelectionViewController(
+        _ viewController: GroupSelectionViewController,
+        didSelectItem sortedItem: SortedItem
+    )
 }
 
+/// Used when presenting a list of `DemoGroup`s.
 class GroupSelectionViewController: UIViewController {
 
     // MARK: - Private properties
@@ -25,6 +29,10 @@ class GroupSelectionViewController: UIViewController {
 
     // MARK: - Init
 
+    /// - Parameters:
+    ///   - sortedItems: A list of `SortedItem`s that'll be used to populate the list of groups.
+    ///   - selectedOriginalIndex: The currently selected demo group index. Will be used to identify which cell to highlight, if non-nil.
+    ///   - delegate: A type conforming to `GroupSelectionViewControllerDelegate`.
     init(sortedItems: [SortedItem], selectedOriginalIndex: Int?, delegate: GroupSelectionViewControllerDelegate) {
         self.sortedItems = sortedItems
         self.selectedOriginalIndex = selectedOriginalIndex

@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 
 extension ViewControllerMapper {
+    /// Wrapper for `Demoable`s that are `View`.
     class SwiftUIContainer<Content: View>: UIHostingController<Content> {
 
         // MARK: - Private properties

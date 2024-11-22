@@ -5,6 +5,7 @@ protocol CornerAnchoringViewDelegate: AnyObject {
     func cornerAnchoringViewDidSelectTweakButton(_ cornerAnchoringView: CornerAnchoringView)
 }
 
+/// A small view that can be moved between the corners of its parent view. Used for presenting a button that opens `TweakTableViewController`.
 class CornerAnchoringView: UIView {
     weak var delegate: CornerAnchoringViewDelegate?
 
