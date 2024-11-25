@@ -76,7 +76,8 @@ import UIKit
 import DemoKit
 
 // An enum, where all cases refers to a specific demo in your app.
-// Using a 
+// Using an enum, with `String` as the raw value, will help you out
+// removing some boilerplate for the setup.
 enum ComponentDemoGroup: String, CaseIterable {
     case mySimpleDemo
     case buttons
