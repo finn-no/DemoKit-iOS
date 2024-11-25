@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 extension ViewControllerMapper {
+    /// Wrapper for `Demoable`s that are `UIView`.
     class UIViewContainer: UIViewController {
 
         // MARK: - Private properties

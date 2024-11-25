@@ -6,6 +6,9 @@ protocol TitleViewDelegate: AnyObject {
     func titleViewWasSelected(_ view: TitleView)
 }
 
+/// Title view within the `UINavigationBar` in `DemoKitViewController`.
+///
+/// Will present the name of the currently selected `DemoGroup` and tapping this will present `GroupSelectionViewController` when the user wants to change group.
 class TitleView: UIView {
 
     // MARK: - Internal properties

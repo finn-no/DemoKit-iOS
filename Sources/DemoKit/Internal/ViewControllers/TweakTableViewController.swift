@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+/// Presented when the user wants to select another `TweakingOption` a `TweakableDemo`. Will list all available tweaks.
 class TweakTableViewController: UIViewController {
 
     // MARK: - Private properties

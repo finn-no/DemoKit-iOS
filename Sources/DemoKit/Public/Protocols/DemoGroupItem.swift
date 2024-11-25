@@ -1,19 +1,16 @@
 import Foundation
 
-/// Represents a demo for a single item within a `DemoGroup`.
+/// Provides info for list presentation for a demo within a `DemoGroup`.
 @MainActor
 public protocol DemoGroupItem {
-    var groupItemIdentifier: String { get }
+    /// Title to present for this demo when listing a `DemoGroup`.
     var groupItemTitle: String { get }
 }
 
 // MARK: - Default values
 
+/// Default value when `DemoGroupItem` implements `RawRepresentable<String>`, i.e. an enum.
 public extension DemoGroupItem where Self: RawRepresentable, RawValue == String {
-    var groupItemIdentifier: String {
-        rawValue
-    }
-
     var groupItemTitle: String {
         rawValue.capitalizingFirstLetter
     }

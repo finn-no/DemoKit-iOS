@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+/// A simple button to present for a `Demoable` when its `dismissKind == .button`.
 class DismissButton: UIButton {
 
     // MARK: - Init

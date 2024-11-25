@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 import SwiftUI
 
+/// Viewcontroller for presenting a list of `DemoGroup`.
+
+/// Instantiate and place it within a `UINavigationController` to handle navigation between `DemoGroup` selection.
 public class DemoKitViewController: UIViewController {
 
     // MARK: - Private properties
@@ -168,7 +171,10 @@ extension DemoKitViewController: TitleViewDelegate {
 // MARK: - GroupSelectionViewControllerDelegate
 
 extension DemoKitViewController: GroupSelectionViewControllerDelegate {
-    func groupSelectionViewController(_ viewController: GroupSelectionViewController, didSelectItem sortedItem: SortedItem) {
+    func groupSelectionViewController(
+        _ viewController: GroupSelectionViewController,
+        didSelectItem sortedItem: SortedItem
+    ) {
         let demoGroup = demoGroups[sortedItem.originalIndex]
         updateSelectedDemoGroup(demoGroup)
 
