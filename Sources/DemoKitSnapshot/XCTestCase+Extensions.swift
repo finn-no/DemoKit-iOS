@@ -170,7 +170,7 @@ extension XCTestCase {
                 ])
 
                 assertSnapshot(
-                    matching: viewController,
+                    of: viewController,
                     as: .image(
                         on: device.imageConfig,
                         precision: precision,
